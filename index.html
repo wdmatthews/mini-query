@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <title>mini-query</title>
+  <link rel="stylesheet" href="mq.css">
+  <script src="mq.js"></script>
+</head>
+<body>
+  <section>
+    <h1>Introduction</h1>
+    <p>mini-query is a lightweight script to shorten code related to DOM manipulation.</p>
+    <p>The API is designed to be used similarly to jQuery.</p>
+    <h2>Install</h2>
+    <p>Include one of the following script tags to import mini-query into your project.</p>
+    <p class="inline-code"><code>&lt;script src="https://github.com/wdmatthews/mini-query/mq.js"&gt;&lt;/script&gt;</code></p>
+    <p class="inline-code"><code>&lt;script src="https://github.com/wdmatthews/mini-query/mq.min.js"&gt;&lt;/script&gt;</code></p>
+    <p>The full version contains documentation, but the minified version does not and is smaller in size.</p>
+    <p>The full source code is available at <a href="https://github.com/wdmatthews/mini-query" target="_blank">https://github.com/wdmatthews/mini-query</a>.</p>
+    <h2>Basic Use</h2>
+    <p>To get an element from the DOM, you can use mq.one(selector), as follows:</p>
+    <p class="inline-code"><code>const paragraph = mq.one('p');</code></p>
+    <p>mq.one(selector) returns an MQElement instance, not an Element instance. If you need the Element instance instead, use the MQElement instance's el property.</p>
+    <p class="inline-code"><code>const paragraphElement = mq.one('p').el;</code></p>
+    <p>To get multiple elements from the DOM, you can use mq.all(selector), as follows:</p>
+    <p class="inline-code"><code>const paragraphs = mq.all('p');</code></p>
+    <p class="margin-bottom">mq.all(selector) returns an array of MQElement instances that you can loop through with Array.forEach().</p>
+    <p class="margin-bottom">Some methods have an optional new value parameter, which can be excluded to return the current value instead of setting a new value.</p>
+    <p>For example, paragraph.text() will return the paragraph's innerText, whereas paragraph.text('Changed Text') will set the paragraph's innerText to 'Changed Text'.</p>
+    <h2>Under the Hood</h2>
+    <p class="margin-bottom">Below is a table detailing which mini-query methods replace which vanilla JavaScript methods and properties for DOM manipulation.</p>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>mini-query</th>
+            <th>Vanilla</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>mq.one()</td>
+            <td>document.querySelector()</td>
+          </tr>
+          <tr>
+            <td>mq.all()</td>
+            <td>document.querySelectorAll()</td>
+          </tr>
+          <tr>
+            <td>mq.new()</td>
+            <td>document.createElement() then document.appendChild()</td>
+          </tr>
+          <tr>
+            <td>MQElement.text()</td>
+            <td>Element.innerText</td>
+          </tr>
+          <tr>
+            <td>MQElement.html()</td>
+            <td>Element.innerHTML</td>
+          </tr>
+          <tr>
+            <td>MQElement.attr()</td>
+            <td>Element.getAttribute(), Element.setAttribute(), or Element.removeAttribute()</td>
+          </tr>
+          <tr>
+            <td>MQElement.style()</td>
+            <td>Element.style</td>
+          </tr>
+          <tr>
+            <td>MQElement.hasClass()</td>
+            <td>Element.classList.contains()</td>
+          </tr>
+          <tr>
+            <td>MQElement.toggleClass()</td>
+            <td>Element.classList.toggle()</td>
+          </tr>
+          <tr>
+            <td>MQElement.addClass()</td>
+            <td>Element.classList.add()</td>
+          </tr>
+          <tr>
+            <td>MQElement.removeClass()</td>
+            <td>Element.classList.remove()</td>
+          </tr>
+          <tr>
+            <td>MQElement.on()</td>
+            <td>Element.addEventListener()</td>
+          </tr>
+          <tr>
+            <td>MQElement.off()</td>
+            <td>Element.removeEventListener()</td>
+          </tr>
+          <tr>
+            <td>MQElement.remove()</td>
+            <td>Element.parentNode.removeChild(element)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  
+  <section>
+    <h1>Content Manipulation</h1>
+    <p class="margin-bottom">Using text(newText) and html(newHTML), you can change the innerText or innerHTML of an element.</p>
+<pre class="margin-bottom"><code>// Retrieve an MQElement containing a paragraph tag.
+// Get the element itself using paragraph.el.
+const paragraph = mq.one('p');
+// Modify the paragraph's text.
+paragraph.text('Changed Text');
+// Logs 'Changed Text'.
+console.log(paragraph.text());
+// Retrieve an array of MQElements each containing a paragraph tag.
+const paragraphs = mq.all('p');
+// Loop through each paragraph and modify its innerHTML.
+paragraphs.forEach(paragraph => {
+  paragraph.html('&lt;strong&gt;Changed Text&lt;/strong&gt;');
+});</code></pre>
+    <div id="example-1" class="margin-bottom">
+      <p>Paragraph One</p>
+      <p>Paragraph Two</p>
+      <p>Paragraph Three</p>
+    </div>
+    <div class="button-group">
+      <button onclick="example1Text()">Change One Text</button>
+      <button onclick="example1HTML()">Change All HTML</button>
+    </div>
+  </section>
+  
+  <section>
+    <h1>Attribute, Style</h1>
+    <p class="margin-bottom">Using attr(attributeName, newValue), and style(attributeName, newValue), you can change the attributes or style of an element.</p>
+<pre class="margin-bottom"><code>const button = mq.one('button');
+// Disable the button by adding the disabled attribute.
+button.attr('disabled', 'true');
+// Enable the button by removing the disabled attribute.
+button.attr('disabled', '');
+// Change the background color of the button.
+button.style('background-color', 'rgb(0, 184, 148)');</code></pre>
+    <div id="example-2" class="margin-bottom">
+      <button onclick="alert('You clicked the button!')">Alert</button>
+    </div>
+    <div class="button-group">
+      <button onclick="example2Disable()">Disable Button</button>
+      <button onclick="example2Enable()">Enable Button</button>
+      <button onclick="example2Color()">Color Button</button>
+    </div>
+  </section>
+  
+  <section>
+    <h1>Class Manipulation</h1>
+    <p class="margin-bottom">Using hasClass(className), toggleClass(className), addClass(className), and removeClass(className), you can read or change the classes of an element.</p>
+<pre class="margin-bottom"><code>const paragraph = mq.one('p');
+// Log if the class exists.
+console.log(paragraph.hasClass('border'));
+// Toggle the class. (Add the class if it does not exist, remove it otherwise).
+paragraph.toggleClass('border');
+// Add the class if it is not already on the paragraph.
+paragraph.addClass('border');
+// Remove the class if it is on the paragraph.
+paragraph.removeClass('border');</code></pre>
+    <div id="example-3" class="margin-bottom">
+      <p>Some Text</p>
+    </div>
+    <div class="button-group">
+      <button onclick="example3Has()">Alert Has Class</button>
+      <button onclick="example3Toggle()">Toggle Class</button>
+      <button onclick="example3Add()">Add Class</button>
+      <button onclick="example3Remove()">Remove Class</button>
+    </div>
+  </section>
+  
+  <section>
+    <h1>Event Manipulation</h1>
+    <p class="margin-bottom">Using on(eventName, action), and off(eventName, action), you can change the event listeners of an element.</p>
+<pre class="margin-bottom"><code>function onButtonClick() {
+  alert('You clicked the button!');
+}
+const button = mq.one('button');
+// Add the onclick event with a lambda expression (cannot be removed).
+button.on('click', () => alert('You clicked the button!'));
+// Add the onclick event with a function (can be removed).
+button.on('click', onButtonClick);
+// Remove the onclick event.
+button.off('click', onButtonClick);</code></pre>
+    <div id="example-4" class="margin-bottom">
+      <button>Alert</button>
+    </div>
+    <div class="button-group">
+      <button onclick="example4On()">Add Event</button>
+      <button onclick="example4Off()">Remove Event</button>
+    </div>
+  </section>
+  
+  <section>
+    <h1>Element Creation/Deletion</h1>
+    <p class="margin-bottom">Using mq.new(tag, parent), and remove(), you add and remove an element to and from the page or another element.</p>
+<pre class="margin-bottom"><code>// Add a div to the page.
+const div = mq.new('div');
+// Add a paragraph to the div's element (div.el).
+// Keep in mind that .el returns a DOM Element, so you could use document.querySelector('div') or any similar method.
+const paragraph = mq.new('p', div.el);
+// Add a paragraph to the div.
+const paragraph = mq.new('p', div);
+// Remove the div (and therefore the paragraph).
+div.remove();</code></pre>
+    <div id="example-5" class="margin-bottom">
+      <p>Paragraph</p>
+    </div>
+    <div class="button-group">
+      <button onclick="example5Add()">Add Paragraph</button>
+      <button onclick="example5Remove()">Remove Paragraph</button>
+    </div>
+  </section>
+  
+  <script>
+    function example1Text() {
+      mq.one('#example-1 p').text('Changed Text');
+    }
+    
+    function example1HTML() {
+      mq.all('#example-1 p').forEach(paragraph => {
+        paragraph.html('<strong>Changed Text</strong>');
+      });
+    }
+    
+    function example2Disable() {
+      mq.one('#example-2 button').attr('disabled', 'true');
+    }
+    
+    function example2Enable() {
+      mq.one('#example-2 button').attr('disabled', '');
+    }
+    
+    function example2Color() {
+      mq.one('#example-2 button').style('background-color', 'rgb(0, 184, 148)');
+    }
+    
+    function example3Has() {
+      alert(mq.one('#example-3 p').hasClass('border'));
+    }
+    
+    function example3Toggle() {
+      mq.one('#example-3 p').toggleClass('border');
+    }
+    
+    function example3Add() {
+      mq.one('#example-3 p').addClass('border');
+    }
+    
+    function example3Remove() {
+      mq.one('#example-3 p').removeClass('border');
+    }
+    
+    function example4ButtonClick() {
+      alert('You clicked the button!');
+    }
+    
+    function example4On() {
+      mq.one('#example-4 button').on('click', example4ButtonClick);
+    }
+    
+    function example4Off() {
+      mq.one('#example-4 button').off('click', example4ButtonClick);
+    }
+    
+    function example5Add() {
+      mq.new('p', mq.one('#example-5'))
+        .text('Paragraph');
+    }
+    
+    function example5Remove() {
+      mq.one('#example-5 p').remove();
+    }
+  </script>
+</body>
+</html>

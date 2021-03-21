@@ -1,0 +1,77 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+html {
+  background-color: black;
+  color: white;
+  font-family: sans-serif;
+}
+
+section {
+  background-color: rgb(25, 25, 25);
+  margin: 16px;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+h1, h2 { margin-bottom: 16px; }
+h2 {
+  font-size: 1.25rem;
+  margin-top: 16px;
+}
+
+button {
+  padding: 8px;
+  background-color: rgb(9, 132, 227);
+  color: white;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+}
+button:hover { opacity: 0.9; }
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+pre, .table-container  {
+  background-color: rgb(35, 35, 35);
+  padding: 8px;
+  border-radius: 8px;
+  line-height: 1rem;
+  overflow-x: auto;
+}
+
+table {
+  border-spacing: 8px;
+}
+
+th {
+  font-weight: bold;
+  text-align: left;
+}
+
+a {
+  text-decoration: none;
+  color: rgb(9, 132, 227);
+}
+
+.inline-code { padding: 8px; }
+
+.button-group {
+  font-size: 0px;
+  margin: -8px;
+}
+.button-group button { margin: 8px; }
+
+.margin-bottom { margin-bottom: 16px; }
+
+.border {
+  border-width: 4px;
+  border-color: white;
+  border-style: solid;
+  border-radius: 8px;
+  padding: 8px;
+}
